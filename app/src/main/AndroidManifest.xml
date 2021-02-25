@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fyp">
+    <!--  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label=""
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FYP">
+        <activity android:name=".Activities.login"></activity>
+        <activity android:name=".Activities.Register">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /> <!-- reference https://developers.google.com/maps/documentation/android-sdk/get-api-key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDbOaj1BHC61tPZbug4WYplDROodhLfXF8" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Activities.ViewMarketingComment" />
+        <activity android:name=".Activities.CreateMarketingComment" />
+        <activity android:name=".Activities.Marketing" />
+        <activity android:name=".Activities.Management" />
+        <activity android:name=".Activities.ViewManagementComments" />
+        <activity android:name=".Activities.CreateManagementComment" />
+        <activity android:name=".Activities.Resources" />
+        <activity android:name=".Activities.Modules" />
+        <activity android:name=".StudybuddyrvItems" />
+        <activity android:name=".Activities.StudyBuddyActiveGroups" />
+        <activity android:name=".Activities.StudyBuddySection" />
+        <activity android:name=".Activities.Jobs" />
+        <activity android:name=".Activities.StudyBuddy" />
+        <activity android:name=".Activities.Tips" />
+        <activity android:name=".Activities.ChatArea" />
+        <activity android:name=".Activities.CommunitySection" />
+        <activity android:name=".Activities.ClassFinder" />
+        <activity android:name=".Activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+
+        android:title="Home"
+        android:id="@+id/btm_home"
+        app:showAsAction="always"
+
+        />
+
+    <item
+        android:id="@+id/btm_dashboard"
+        android:title="Community"
+        android:icon="@drawable/ic_baseline"/>
+
+
+
+    <item
+        android:id="@+id/btm_maps"
+        android:title="Class finder"
+        android:icon="@drawable/ic_baseline_map_24"/>
+
+
+</menu>
+    <!--reference-->
+    <!--https://www.youtube.com/watch?v=JjfSjMs0ImQ -->
