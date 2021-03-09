@@ -1,111 +1,136 @@
 package com.example.fyp.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fyp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public class Management extends AppCompatActivity {
+public class ChatRoomSelected extends AppCompatActivity {
+
 
     private Toolbar toolbar;
 
 
-    //reference https://github.com/bikashthapa01/firebase-authentication-android
-    //refernce https://www.youtube.com/watch?v=pAhYEy6s9wQ
-    FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
-    TextView fullName;
-    String userId;
+    //reference https://www.youtube.com/watch?v=wVCz1a3ogqk
+    //****
+    //chat app code
+    private String user_name;
+    private String room_name;
+    private DatabaseReference root;
+    private String temp_Key;
+
+
+    private Button btn_send_msg;
+    private EditText input_msg;
+    private TextView chat_converstation;
+    //end of chat app code
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_management);
+        setContentView(R.layout.activity_chat_room_selected);
 
-        //toolbar
         toolbar=findViewById(R.id.Toolbar);
         setSupportActionBar(toolbar);
 
 
-        //reference https://www.youtube.com/watch?v=pAhYEy6s9wQ
-        //used to get id
-        fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
-
-        fullName = findViewById(R.id.textView8);
-
-
-        userId = fAuth.getCurrentUser().getUid();
-
-
-        DocumentReference documentReference = fStore.collection("users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.exists()){
-
-                    fullName.setText(documentSnapshot.getString("fName"));
-
-
-                }else {
-                    Log.d("tag", "onEvent: Document do not exists");
-                }
-            }
-        });
 
 
 
+        btn_send_msg = (Button) findViewById(R.id.btn_send);
+        input_msg = (EditText) findViewById(R.id.msg_input);
+        chat_converstation = (TextView) findViewById(R.id.textView3);
+
+        user_name = getIntent().getExtras().get("user_name").toString();
+        room_name = getIntent().getExtras().get("room_name").toString();
+        setTitle(" Room - "+room_name );
 
 
+        root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
-
-
-
-
-
-        //initialising buttons
-        final Button btnManCreateComment = (Button) findViewById(R.id.btnManCreateComment);
-        final Button btnManViewComment = (Button) findViewById(R.id.btnManViewComment);
-
-
-
-        btnManCreateComment.setOnClickListener(new View.OnClickListener() {
+        btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), CreateManagementComment.class);
-                startActivity(startIntent);
+
+
+
+                //reference https://www.youtube.com/watch?v=wVCz1a3ogqk
+                //****
+                //chat app code
+
+                Map<String, Object> map = new HashMap<String, Object>();
+                temp_Key = root.push().getKey();
+                root.updateChildren(map);
+
+                DatabaseReference message_root = root.child(temp_Key);
+                Map<String,Object> map2 = new HashMap<String, Object>();
+                map2.put("name", user_name);
+                map2.put("msg", input_msg.getText().toString());
+
+                message_root.updateChildren(map2);
             }
         });
 
-        btnManViewComment.setOnClickListener(new View.OnClickListener() {
+        root.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), ViewManagementComments.class);
-                startActivity(startIntent);
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                append_chat_converstation(snapshot);
+            }
+
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
+        //end of chat app code
 
 
 
@@ -136,20 +161,7 @@ public class Management extends AppCompatActivity {
             }
         });
         //end of bottom nav
-
-
-
-
-
-    }
-    //under this is out of the oncreate method
-
-
-
-
-
-
-
+    } //end of onCreate method
 
 
     //using inflater to show the items in the menu (toolbar)
@@ -159,7 +171,6 @@ public class Management extends AppCompatActivity {
         inflater.inflate(R.menu.menu,menu);
         return true;
     }
-
 
     // tutorial 2 mobile
     //https://www.youtube.com/watch?v=Pmsd2x-Bksk
@@ -189,6 +200,22 @@ public class Management extends AppCompatActivity {
     }
 
 
+    //reference https://www.youtube.com/watch?v=wVCz1a3ogqk
+    //****
+    //chat app code
+
+    private String chat_msg, chat_user_name;
+    private void append_chat_converstation(DataSnapshot snapshot) {
+        Iterator i = snapshot.getChildren().iterator();
+
+        while (i.hasNext()){
+            chat_msg = (String) ((DataSnapshot)i.next()).getValue();
+            chat_user_name = (String) ((DataSnapshot)i.next()).getValue();
+
+            chat_converstation.append(chat_user_name +" : "+ chat_msg + " \n");
+        }
+    }
+    //end of chat app code
 
 
 }

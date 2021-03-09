@@ -3,14 +3,17 @@ package com.example.fyp.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fyp.R;
@@ -21,17 +24,29 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 public class ViewManagementComments extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    //RatingBar ratingBar;
+
+    //reference https://github.com/bikashthapa01/firebase-authentication-android
+    //refernce https://www.youtube.com/watch?v=pAhYEy6s9wQ
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    TextView fullName;
+    String userId;
+
+
 
     //reference https://drive.google.com/file/d/1LTxVNNs-fnD4tIADfqVllZztUFZe3KNl/view
     //reference https://www.youtube.com/watch?v=yPJ_5ybLkFo&list=PLhhNsarqV6MQ-eMvAOwjuBUDm7hfsTUta&index=10
@@ -40,11 +55,41 @@ public class ViewManagementComments extends AppCompatActivity {
     private ManagementAdapter adapter;
     private List<ModelManagement> list;
 
+    private Toolbar toolbar;
+    //RatingBar ratingBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_management_comments);
+
+        //reference https://www.youtube.com/watch?v=pAhYEy6s9wQ
+        //used to get id
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        fullName = findViewById(R.id.textView10);
+
+
+        userId = fAuth.getCurrentUser().getUid();
+
+
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot.exists()){
+
+                    fullName.setText(documentSnapshot.getString("fName"));
+
+
+                }else {
+                    Log.d("tag", "onEvent: Document do not exists");
+                }
+            }
+        });
+
 
 
         //reference https://drive.google.com/file/d/1LTxVNNs-fnD4tIADfqVllZztUFZe3KNl/view
@@ -59,6 +104,8 @@ public class ViewManagementComments extends AppCompatActivity {
         adapter = new ManagementAdapter(this , list);
         recyclerView.setAdapter(adapter);
 
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new TouchHelper(adapter));
+        touchHelper.attachToRecyclerView(recyclerView);
         showData();
 
 

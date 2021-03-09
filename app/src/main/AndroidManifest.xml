@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP">
-        <activity android:name=".Activities.login"></activity>
+        <activity android:name=".Activities.ChatRoomSelected"></activity>
+        <activity android:name=".Activities.login" />
         <activity android:name=".Activities.Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

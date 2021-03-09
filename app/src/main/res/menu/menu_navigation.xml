@@ -7,7 +7,7 @@
         android:title="Home"
         android:id="@+id/btm_home"
         app:showAsAction="always"
-
+        android:icon="@drawable/ic_home"
         />
 
     <item

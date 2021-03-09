@@ -59,4 +59,16 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-nearby:17.0.0'
 
+    //delete swipe feature
+   // implement 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
+    //for sign out
+    implementation 'com.firebaseui:firebase-ui-auth:7.1.1'
+
+
+    //added for chat feature
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-database:19.6.0'
+
 }

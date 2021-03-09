@@ -54,7 +54,7 @@ public class CommunitySection extends AppCompatActivity {
         final Button btnChat = (Button) findViewById(R.id.btnChat);
         final Button btnTips = (Button) findViewById(R.id.btnTips);
         final Button btnStudyBuddy = (Button) findViewById(R.id.btnStudyBuddy);
-        final Button btnJob = (Button) findViewById(R.id.btnJob);
+        final Button btnJob = (Button) findViewById(R.id.btnCanvas);
 
 
         //reference https://www.youtube.com/watch?v=pAhYEy6s9wQ
@@ -114,7 +114,10 @@ public class CommunitySection extends AppCompatActivity {
         btnJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(getApplicationContext(), Jobs.class);
+                //reference 
+                //https://www.youtube.com/watch?v=XvH748sImco
+                Intent startIntent = getPackageManager().getLaunchIntentForPackage("com.instructure.candroid");
+                if(startIntent != null)
                 startActivity(startIntent);
             }
         });

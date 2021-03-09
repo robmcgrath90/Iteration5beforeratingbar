@@ -74,6 +74,18 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Toolbar"
+        app:layout_constraintVertical_bias="0.729" />
+
     <!--reference-->
     <!--https://www.youtube.com/watch?v=JjfSjMs0ImQ -->
 

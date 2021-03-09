@@ -7,6 +7,19 @@
     tools:context=".Activities.MainActivity">
 
     <Button
+        android:id="@+id/btnInfoOnCommunityButton"
+        android:layout_width="37dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#E91E63"
+        android:text="I"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.612"
+        app:layout_constraintStart_toEndOf="@+id/btnCommunity" />
+
+    <Button
         android:id="@+id/btnCommunity"
         android:layout_width="139dp"
         android:layout_height="49dp"
@@ -111,6 +124,31 @@
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="75dp"
+        android:layout_height="47dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toEndOf="@+id/profileName"
+        app:layout_constraintTop_toTopOf="@+id/Toolbar" />
+
+    <Button
+        android:id="@+id/btnInfoOnclassfinder"
+        android:layout_width="37dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#E91E63"
+        android:text="I"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClassFinder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toEndOf="@+id/btnClassFinder"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <!--reference-->
     <!--https://www.youtube.com/watch?v=JjfSjMs0ImQ -->

@@ -17,15 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fyp.R;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     private Toolbar toolbar;
 
     private static final String TAG = "MainActivity";
@@ -51,6 +59,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //creating a clcikable help popup to help users
+        //https://www.youtube.com/watch?v=Bsm-BlXo2SI
+        Button btnInfoOnclassfinder = (Button) findViewById(R.id.btnInfoOnclassfinder);
+        btnInfoOnclassfinder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+        //creating a clcikable help popup to help users
+        //https://www.youtube.com/watch?v=Bsm-BlXo2SI
+        Button btnInfoOnCommunity = (Button) findViewById(R.id.btnInfoOnCommunityButton);
+        btnInfoOnCommunity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialogCommunity();
+            }
+        });
 
 
         //reference https://www.youtube.com/watch?v=pAhYEy6s9wQ
@@ -120,6 +147,31 @@ public class MainActivity extends AppCompatActivity {
         //initialising buttons
         final Button btnCommunity = (Button) findViewById(R.id.btnCommunity);
         final Button btnClassFinder = (Button) findViewById(R.id.btnClassFinder);
+        final Button btnLogOut = (Button) findViewById(R.id.btnLogout);
+
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthUI.getInstance()
+                        .signOut(MainActivity.this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                Intent intent = new Intent(MainActivity.this,login.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(MainActivity.this, "Sign Out Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
 
 
 
@@ -201,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             //reference https://www.youtube.com/watch?v=TwHmrZxiPA8
             //time 18.00  signs user out when they log out
             case R.id.dropdown2:
-                FirebaseAuth.getInstance().signOut(); //logout the current user
+
                 startActivity(new Intent(getApplicationContext(), login.class));
                 finish();
                 Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show();
@@ -212,8 +264,23 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //reference https://www.youtube.com/watch?v=Bsm-BlXo2SI
+    //for showing info on the class finder
+    public void openDialog(){
+        DialogForclassFinder dialogForclassFinder = new DialogForclassFinder();
+        dialogForclassFinder.show(getSupportFragmentManager(), "Class finder dialog");
+    }
+
+    //reference https://www.youtube.com/watch?v=Bsm-BlXo2SI
+    //for showing info on the class finder
+    public void openDialogCommunity(){
+        DialogToCommunitySection dialogToCommunitySection = new DialogToCommunitySection();
+        dialogToCommunitySection.show(getSupportFragmentManager(), "Class finder dialog");
+    }
+
+
+
 
 }
-
 
 

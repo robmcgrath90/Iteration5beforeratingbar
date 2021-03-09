@@ -7,12 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fyp.R;
@@ -21,13 +23,30 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 public class CreateManagementComment extends AppCompatActivity {
 
+
+
+    //reference https://github.com/bikashthapa01/firebase-authentication-android
+    //refernce https://www.youtube.com/watch?v=pAhYEy6s9wQ
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    TextView fullName;
+    String userId;
+
+    //creating a variable so i can assign the snapshot and assigning in the savebtn
+    String fullname;
 
     //reference https://drive.google.com/file/d/1LTxVNNs-fnD4tIADfqVllZztUFZe3KNl/view
     //reference https://www.youtube.com/watch?v=4huqTmJ1Ung&t=2s
@@ -51,6 +70,39 @@ public class CreateManagementComment extends AppCompatActivity {
         mSaveBtn = findViewById(R.id.btnSaveManagementComment);
         mShowBtn = findViewById(R.id.btnViewCommentManagement);
 
+
+
+        //reference https://www.youtube.com/watch?v=pAhYEy6s9wQ
+        //used to get id
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        fullName = findViewById(R.id.textView9);
+
+
+        userId = fAuth.getCurrentUser().getUid();
+
+
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot.exists()){
+
+                    fullName.setText(documentSnapshot.getString("fName"));
+
+                    fullname = documentSnapshot.getString("fName");
+
+                }else {
+                    Log.d("tag", "onEvent: Document do not exists");
+                }
+            }
+        });
+
+
+
+
+
         db = FirebaseFirestore.getInstance();
 
         //reference https://drive.google.com/file/d/1LTxVNNs-fnD4tIADfqVllZztUFZe3KNl/view
@@ -70,7 +122,8 @@ public class CreateManagementComment extends AppCompatActivity {
 
                 String title = mTitle.getText().toString();
                 String desc = mDesc.getText().toString();
-                String id = UUID.randomUUID().toString();
+                String id =  fullname ;
+                Log.d("checking id", id);
 
                 saveToFireStore(id, title, desc);
 

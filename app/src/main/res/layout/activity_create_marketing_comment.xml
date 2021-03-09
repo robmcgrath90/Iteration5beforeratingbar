@@ -32,6 +32,7 @@
         android:layout_width="381dp"
         android:layout_height="289dp"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="100dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start"
@@ -42,24 +43,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_title2"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintTop_toBottomOf="@+id/Toolbar" />
 
     <EditText
         android:id="@+id/edit_title2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/enter_title"
         android:inputType="textPersonName"
         android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_desc2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/Toolbar" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout6"
@@ -70,17 +70,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/Toolbar"
+        android:layout_width="411dp"
+        android:layout_height="55dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -95,6 +98,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_navigation" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/Toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/Toolbar"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="@+id/Toolbar"
+        app:layout_constraintTop_toTopOf="@+id/Toolbar"
+        app:layout_constraintVertical_bias="0.75" />
 
 
     <!--reference-->

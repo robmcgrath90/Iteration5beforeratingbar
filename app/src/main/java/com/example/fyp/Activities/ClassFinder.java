@@ -175,11 +175,11 @@ public class ClassFinder extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
 
         LatLng ORahilly = new LatLng(51.893007, -8.490422);
-        orahilly2 = mMap.addMarker(new MarkerOptions().position(ORahilly).title("O'Rahilly Building"));
+        orahilly2 = mMap.addMarker(new MarkerOptions().position(ORahilly).title("BIS Lab"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ORahilly));
 
         LatLng kane = new LatLng(51.892708, -8.494662);
-        kane2 =  mMap.addMarker(new MarkerOptions().position(kane).title("Kane Building"));
+        kane2 =  mMap.addMarker(new MarkerOptions().position(kane).title("IS4441 CLass"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(kane));
 
 
@@ -256,11 +256,11 @@ public class ClassFinder extends FragmentActivity implements OnMapReadyCallback,
     public void onRoutingStart() {
 
         LatLng ORahilly = new LatLng(51.893007, -8.490422);
-        orahilly2 =  mMap.addMarker(new MarkerOptions().position(ORahilly).title("O'Rahilly Building"));
+        orahilly2 =  mMap.addMarker(new MarkerOptions().position(ORahilly).title("BIS Lab"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ORahilly));
 
         LatLng kane = new LatLng(51.892708, -8.494662);
-        mMap.addMarker(new MarkerOptions().position(kane).title("Kane Building"));
+        mMap.addMarker(new MarkerOptions().position(kane).title("IS4441 Class"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(kane));
 
 
